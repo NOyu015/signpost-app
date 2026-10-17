@@ -79,7 +79,7 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      # ── 3. Stellar CLI ────────────────────────────────────────────────────────
+      # ── 3. Stellar CLI ───────────────────────────────────────────────────────
       # Pin to a specific version so CLI flag changes don't silently break us.
       - name: Install Stellar CLI
         run: |
@@ -104,7 +104,7 @@ jobs:
           docker compose -f docker-compose.test.yml up -d
           echo "Quickstart container started."
 
-      # ── 6. Deploy contract ────────────────────────────────────────────────────
+      # ── 6. Deploy contract ───────────────────────────────────────────────────
       - name: Deploy contract to quickstart
         run: |
           chmod +x scripts/deploy-test-contract.sh
