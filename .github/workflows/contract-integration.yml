@@ -79,7 +79,7 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      # ── 3. Stellar CLI ──────────────────────────────────────────────────────
+      # ── 3. Stellar CLI ────────────────────────────────────────────────────────
       # Pin to a specific version so CLI flag changes don't silently break us.
       - name: Install Stellar CLI
         run: |
@@ -88,7 +88,7 @@ jobs:
           cargo install stellar-cli --version 22.0.1 --locked
           echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
 
-      # ── 4. Cache the contract WASM by its pinned SHA-256 ────────────────────
+      # ── 4. Cache the contract WASM by its pinned SHA-256 ───────────────────
       - name: Cache contract WASM
         id: wasm-cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
@@ -104,7 +104,7 @@ jobs:
           docker compose -f docker-compose.test.yml up -d
           echo "Quickstart container started."
 
-      # ── 6. Deploy contract ──────────────────────────────────────────────────
+      # ── 6. Deploy contract ────────────────────────────────────────────────────
       - name: Deploy contract to quickstart
         run: |
           chmod +x scripts/deploy-test-contract.sh
@@ -145,14 +145,14 @@ jobs:
             echo "$line" >> "$GITHUB_ENV"
           done < .env.integration
 
-      # ── 9. Run the integration test suite ───────────────────────────────────
+      # ── 9. Run the integration test suite ────────────────────────────────────
       - name: Run contract integration tests
         run: npm run test:integration
         # Tests use TX_TIMEOUT_MS * 5 per suite; allow up to 10 min for the
         # whole job before GitHub cancels it.
         timeout-minutes: 10
 
-      # ── 10. Upload test results on failure ──────────────────────────────────
+      # ── 10. Upload test results on failure ───────────────────────────────────
       - name: Upload integration test report (on failure)
         if: failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -163,7 +163,7 @@ jobs:
             .env.integration
           retention-days: 7
 
-      # ── 11. Stop quickstart ─────────────────────────────────────────────────
+      # ── 11. Stop quickstart ──────────────────────────────────────────────────
       - name: Stop quickstart
         if: always()
         run: docker compose -f docker-compose.test.yml down -v
